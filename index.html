@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sarah Kameli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Alpino variable font — single declaration covers all weights 100–900 */
+    @font-face {
+      font-family: 'Alpino';
+      src: url('/fonts/Alpino-Variable.woff2') format('woff2'),
+           url('/fonts/Alpino-Variable.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <style>
+    :root {
+      --bg:       #f2f2f2;
+      --electric: #5a3eff;
+      --yellow:   #fffe8b;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    /* ─── Hero: column flex — upper content row + full-width name row ─── */
+    .hero {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Nav ─── */
+    .nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.25rem;
+      padding: 1.75rem 0;
+    }
+
+    .nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--electric); }
+
+    /* ─── Upper section: bio left + grid right ─── */
+    .upper {
+      flex: 1;
+      display: flex;
+      padding-top: 4.5rem; /* clears nav */
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    /* ─── Left column: bio anchored to its bottom ─── */
+    .left {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 0 1.5rem 64px;
+    }
+
+    .bio p {
+      font-size: 0.78rem;
+      line-height: 1.75;
+      color: #555;
+      font-weight: 300;
+      max-width: 260px;
+    }
+
+    /* ─── Right column: 2×3 grid ─── */
+    .right {
+      width: 47%;
+      padding: 0 64px 0.75rem 1rem;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .grid-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr 1fr;
+      gap: 0.55rem;
+      width: 100%;
+    }
+
+    /* ─── Project cards ─── */
+    .card {
+      display: block;
+      overflow: hidden;
+      border-radius: 6px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .card:hover img { transform: scale(1.06); }
+
+    .card-label {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,15,15,0.72) 0%, transparent 60%);
+      display: flex;
+      align-items: flex-end;
+      padding: 0.6rem 0.75rem;
+      opacity: 0;
+      transition: opacity 0.28s;
+    }
+
+    .card:hover .card-label { opacity: 1; }
+
+    .card-label span {
+      color: var(--yellow);
+      font-size: 0.68rem;
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+
+    /* ─── Full-width name row at bottom ─── */
+    .hero-name {
+      display: flex;
+      align-items: flex-end;
+      padding: 0 64px 48px;
+      user-select: none;
+    }
+
+    /*
+      "SARAH KAMELI" — F = 9.907vw
+      Calibrated so name ink + widest descriptor = 1312px (1440 - 2×64px padding).
+    */
+    .name-main {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 9.907vw;
+      font-weight: 700;
+      text-transform: uppercase;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #0f0f0f;
+      white-space: nowrap;
+    }
+
+    /*
+      Descriptor stack — F/4 each (2.477vw).
+      3 × (F/4) × 0.88 = 66% of name CSS height → stack sits clearly
+      within the all-caps name's visual bounds; no ascender/descender overflow.
+    */
+    .name-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .name-stack span {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 2.477vw;       /* exactly 9.907vw ÷ 4 */
+      font-weight: 400;
+      font-style: normal;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: #0f0f0f;
+      white-space: nowrap;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+
+  <!-- Nav: all three links plain text, no pill -->
+  <nav class="nav">
+    <a href="#work">work</a>
+    <a href="#about">about</a>
+    <a href="#contact">contact</a>
+  </nav>
+
+  <!-- Upper: bio (left) + project grid (right) -->
+  <div class="upper">
+
+    <div class="left">
+      <div class="bio">
+        <p>
+          Urban planner + researcher in NYC.<br>
+          Columbia GSAPP 2026.<br>
+          Housing, memory, coastal futures.
+        </p>
+      </div>
+    </div>
+
+    <div class="right">
+      <div class="grid-wrap">
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Ephemeral Cities Thesis">
+          <div class="card-label"><span>Ephemeral Cities — Thesis</span></div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="roomemories.com">
+          <div class="card-label"><span>roomemories.com</span></div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="City of Ojai">
+          <div class="card-label"><span>City of Ojai</span></div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="GSAPP Studio">
+          <div class="card-label"><span>GSAPP Studio</span></div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Project 5">
+          <div class="card-label"><span>Coming soon</span></div>
+        </a>
+
+        <a href="#" class="card">
+          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Project 6">
+          <div class="card-label"><span>Coming soon</span></div>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Full-width typographic unit: name left + three descriptor lines right -->
+  <div class="hero-name">
+    <div class="name-main">Sarah Kameli</div>
+    <div class="name-stack">
+      <span>Urbanist.</span>
+      <span>Public Space Advocate.</span>
+      <span>Lifelong Student.</span>
+    </div>
+  </div>
+
+</section>
+
+</body>
+</html>
