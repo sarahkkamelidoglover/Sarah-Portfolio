@@ -6,7 +6,6 @@
   <title>Sarah Kameli</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Alpino variable font — single declaration covers all weights 100–900 */
     @font-face {
       font-family: 'Alpino';
       src: url('/fonts/Alpino-Variable.woff2') format('woff2'),
@@ -33,7 +32,7 @@
       height: 100vh;
     }
 
-    /* ─── Hero: column flex — upper content row + full-width name row ─── */
+    /* ─── Hero ─── */
     .hero {
       width: 100vw;
       height: 100vh;
@@ -65,30 +64,70 @@
 
     .nav a:hover { color: var(--electric); }
 
-    /* ─── Upper section: bio left + grid right ─── */
+    /* ─── Upper section ─── */
     .upper {
       flex: 1;
       display: flex;
-      padding-top: 4.5rem; /* clears nav */
+      padding-top: 4.5rem;
       overflow: hidden;
       min-height: 0;
     }
 
-    /* ─── Left column: bio anchored to its bottom ─── */
+    /* ─── Left column: detail panel area ─── */
     .left {
       flex: 1;
       display: flex;
-      align-items: flex-end;
-      padding: 0 0 1.5rem 48px;
+      align-items: center;
+      padding: 0 2rem 0 48px;
     }
 
-    .bio p {
+    /* ─── Detail panel ─── */
+    .detail-panel {
+      opacity: 0;
+      transform: translateY(14px);
+      transition: opacity 0.32s ease, transform 0.32s ease;
+      pointer-events: none;
+    }
+
+    .detail-panel.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .detail-title {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.85rem;
+    }
+
+    .detail-desc {
       font-size: 0.78rem;
-      line-height: 1.75;
+      line-height: 1.8;
       color: #555;
       font-weight: 300;
-      max-width: 420px;
+      max-width: 300px;
+      margin-bottom: 1.25rem;
     }
+
+    .detail-link {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      color: var(--electric);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3em;
+      transition: opacity 0.2s;
+    }
+
+    .detail-link:hover { opacity: 0.7; }
+    .detail-link.is-hidden { display: none; }
 
     /* ─── Right column: 2×3 grid ─── */
     .right {
@@ -117,10 +156,13 @@
       background: #e0e0e0;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.28s;
+      transition: background 0.28s, outline-color 0.28s;
+      outline: 2px solid transparent;
+      outline-offset: -2px;
     }
 
     .card:hover { background: #1a1916; }
+    .card.is-active { outline-color: var(--electric); }
 
     .card-title {
       font-family: 'Alpino', system-ui, sans-serif;
@@ -183,10 +225,6 @@
       user-select: none;
     }
 
-    /*
-      "SARAH KAMELI" — F = 9.907vw
-      Calibrated so name ink + widest descriptor = 1312px (1440 - 2×64px padding).
-    */
     .name-main {
       font-family: 'Alpino', system-ui, sans-serif;
       font-size: 11.567vw;
@@ -198,18 +236,11 @@
       white-space: nowrap;
     }
 
-    /*
-      Colour bar stack — three equal horizontal bars.
-      flex: 1 fills remaining horizontal space after the name.
-      No align-self: stretch — height is content-driven so the stack sits
-      shorter than the name and bottom-aligns via the parent's flex-end.
-      gap: 4px separates the bars.
-    */
     .name-stack {
       display: flex;
       flex-direction: column;
       gap: 4px;
-      margin-left: auto;   /* pushes stack to the right edge; fills leftover space between name and descriptors */
+      margin-left: auto;
     }
 
     .name-stack span {
@@ -227,53 +258,53 @@
 
 <section class="hero">
 
-  <!-- Nav: all three links plain text, no pill -->
   <nav class="nav">
     <a href="#work">work</a>
     <a href="#about">about</a>
     <a href="#contact">contact</a>
   </nav>
 
-  <!-- Upper: bio (left) + project grid (right) -->
   <div class="upper">
 
+    <!-- Left: detail panel (empty until a card is clicked) -->
     <div class="left">
-      <div class="bio">
-        <p>Urban planner and researcher based in New York City.</p>
-        <p>I work at the intersection of public space, community memory, and civic engagement.</p>
-        <p>Columbia GSAPP '26.</p>
+      <div class="detail-panel" id="detail-panel">
+        <h2 class="detail-title"></h2>
+        <p class="detail-desc"></p>
+        <a href="#" class="detail-link is-hidden" id="detail-link" target="_blank" rel="noopener noreferrer">view project →</a>
       </div>
     </div>
 
+    <!-- Right: 2×3 project grid -->
     <div class="right">
       <div class="grid-wrap">
 
-        <a href="#" class="card">
+        <a href="#" class="card" data-project="thesis">
           <p class="card-title">Thesis</p>
           <p class="card-sub">Lessons from the Ephemeral Cities of the 21st Century</p>
         </a>
 
-        <a href="https://www.roomemories.com" target="_blank" rel="noopener noreferrer" class="card card--roomemories">
+        <a href="#" class="card card--roomemories" data-project="roomemories">
           <p class="card-title">roomemories.com</p>
           <p class="card-sub">Interactive Bonnaroo Memory Map</p>
         </a>
 
-        <a href="#" class="card">
+        <a href="#" class="card" data-project="ojai">
           <p class="card-title">City of Ojai</p>
           <p class="card-sub">Tiny Home Ordinance, Tent Town Supportive Housing, Permitting System</p>
         </a>
 
-        <a href="#" class="card">
+        <a href="#" class="card" data-project="gsapp">
           <p class="card-title">GSAPP Studio</p>
           <p class="card-sub">Planning for Change in Renca, Santiago, Chile</p>
         </a>
 
-        <a href="#" class="card">
+        <a href="#" class="card" data-project="gis">
           <p class="card-title">NYC Evacuation GIS</p>
           <p class="card-sub">Spatial analysis + mapping</p>
         </a>
 
-        <a href="#" class="card">
+        <a href="#" class="card" data-project="design">
           <p class="card-title">Design Work</p>
           <p class="card-sub">InDesign, data visualization, visual systems</p>
         </a>
@@ -283,7 +314,7 @@
 
   </div>
 
-  <!-- Full-width typographic unit: name left + three colour bars right -->
+  <!-- Full-width typographic unit -->
   <div class="hero-name">
     <div class="name-main">Sarah Kameli</div>
     <div class="name-stack">
@@ -294,6 +325,92 @@
   </div>
 
 </section>
+
+<script>
+  const projects = {
+    thesis: {
+      title: 'Ephemeral Cities',
+      desc: 'A thesis on temporary urban settlements — from refugee camps to festival cities — and what they reveal about permanence, belonging, and the future of urban form. Developed at Columbia GSAPP, 2026.',
+      link: null
+    },
+    roomemories: {
+      title: 'roomemories.com',
+      desc: 'An interactive memory map of Bonnaroo built with Mapbox GL JS and Supabase. Visitors pin and share location-based memories across the festival grounds, building a collective archive of place.',
+      link: 'https://www.roomemories.com'
+    },
+    ojai: {
+      title: 'City of Ojai',
+      desc: 'Assistant Planner work developing a Tiny Home Ordinance and Tent Town Supportive Housing framework. Built permitting tools in GeoCivix and automated reporting workflows with Google Apps Script.',
+      link: null
+    },
+    gsapp: {
+      title: 'GSAPP Studio',
+      desc: 'A planning studio project for Renca, Santiago — examining displacement, land use change, and community resilience at the urban fringe of a rapidly growing metropolitan region.',
+      link: null
+    },
+    gis: {
+      title: 'NYC Evacuation GIS',
+      desc: 'Spatial analysis of New York City evacuation zones, mapping coverage gaps and equity disparities across borough boundaries. Developed as part of graduate coursework at Columbia GSAPP.',
+      link: null
+    },
+    design: {
+      title: 'Design Work',
+      desc: 'Visual communication across studio, research, and professional contexts — InDesign layouts, data visualization, spatial diagrams, and graphic identity systems.',
+      link: null
+    }
+  };
+
+  const panel    = document.getElementById('detail-panel');
+  const titleEl  = panel.querySelector('.detail-title');
+  const descEl   = panel.querySelector('.detail-desc');
+  const linkEl   = document.getElementById('detail-link');
+  let activeCard = null;
+  let swapTimer  = null;
+
+  function closePanel() {
+    panel.classList.remove('is-visible');
+    if (activeCard) {
+      activeCard.classList.remove('is-active');
+      activeCard = null;
+    }
+  }
+
+  function openPanel(card, data) {
+    titleEl.textContent = data.title;
+    descEl.textContent  = data.desc;
+    if (data.link) {
+      linkEl.href = data.link;
+      linkEl.classList.remove('is-hidden');
+    } else {
+      linkEl.classList.add('is-hidden');
+    }
+    panel.classList.add('is-visible');
+    card.classList.add('is-active');
+    activeCard = card;
+  }
+
+  document.querySelectorAll('.card[data-project]').forEach(card => {
+    card.addEventListener('click', e => {
+      e.preventDefault();
+      clearTimeout(swapTimer);
+
+      if (activeCard === card) {
+        closePanel();
+        return;
+      }
+
+      const data = projects[card.dataset.project];
+
+      if (activeCard) {
+        activeCard.classList.remove('is-active');
+        panel.classList.remove('is-visible');
+        swapTimer = setTimeout(() => openPanel(card, data), 280);
+      } else {
+        openPanel(card, data);
+      }
+    });
+  });
+</script>
 
 </body>
 </html>
