@@ -79,7 +79,7 @@
       flex: 1;
       display: flex;
       align-items: flex-end;
-      padding: 0 0 1.5rem 64px;
+      padding: 0 0 1.5rem 48px;
     }
 
     .bio p {
@@ -87,13 +87,13 @@
       line-height: 1.75;
       color: #555;
       font-weight: 300;
-      max-width: 260px;
+      max-width: 420px;
     }
 
     /* ─── Right column: 2×3 grid ─── */
     .right {
       width: 47%;
-      padding: 0 64px 0.75rem 1rem;
+      padding: 0 44px 0.75rem 1rem;
       display: flex;
       align-items: stretch;
     }
@@ -108,48 +108,78 @@
 
     /* ─── Project cards ─── */
     .card {
-      display: block;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
       overflow: hidden;
       border-radius: 6px;
-      position: relative;
+      padding: 1rem 1.1rem;
+      background: #e0e0e0;
+      text-decoration: none;
       cursor: pointer;
+      transition: background 0.28s;
     }
 
-    .card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.65s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    .card:hover { background: #1a1916; }
+
+    .card-title {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #1a1916;
+      line-height: 1.2;
+      margin-bottom: 0.3rem;
+      transition: color 0.28s;
     }
 
-    .card:hover img { transform: scale(1.06); }
+    .card-sub {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: #5a5a5a;
+      line-height: 1.4;
+      transition: color 0.28s;
+    }
 
-    .card-label {
+    .card:hover .card-title,
+    .card:hover .card-sub { color: #f2f2f2; }
+
+    /* ─── roomemories card: image + overlay ─── */
+    .card--roomemories,
+    .card--roomemories:hover {
+      background: url('roomemories.jpg') center / cover no-repeat;
+      position: relative;
+    }
+
+    .card--roomemories::before {
+      content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(to top, rgba(15,15,15,0.72) 0%, transparent 60%);
-      display: flex;
-      align-items: flex-end;
-      padding: 0.6rem 0.75rem;
-      opacity: 0;
-      transition: opacity 0.28s;
+      background: rgba(0, 0, 0, 0.25);
+      transition: background 0.28s;
+      border-radius: 6px;
     }
 
-    .card:hover .card-label { opacity: 1; }
+    .card--roomemories:hover::before {
+      background: rgba(0, 0, 0, 0.62);
+    }
 
-    .card-label span {
-      color: var(--yellow);
-      font-size: 0.68rem;
-      letter-spacing: 0.04em;
-      font-weight: 400;
+    .card--roomemories .card-title,
+    .card--roomemories .card-sub,
+    .card--roomemories:hover .card-title,
+    .card--roomemories:hover .card-sub {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
     }
 
     /* ─── Full-width name row at bottom ─── */
     .hero-name {
+      width: 100%;
+      overflow: hidden;
       display: flex;
       align-items: flex-end;
-      padding: 0 64px 48px;
+      padding: 0 48px 16px;
       user-select: none;
     }
 
@@ -159,8 +189,8 @@
     */
     .name-main {
       font-family: 'Alpino', system-ui, sans-serif;
-      font-size: 9.907vw;
-      font-weight: 700;
+      font-size: 11.567vw;
+      font-weight: 600;
       text-transform: uppercase;
       line-height: 0.88;
       letter-spacing: -0.02em;
@@ -169,24 +199,25 @@
     }
 
     /*
-      Descriptor stack — F/4 each (2.477vw).
-      3 × (F/4) × 0.88 = 66% of name CSS height → stack sits clearly
-      within the all-caps name's visual bounds; no ascender/descender overflow.
+      Colour bar stack — three equal horizontal bars.
+      flex: 1 fills remaining horizontal space after the name.
+      No align-self: stretch — height is content-driven so the stack sits
+      shorter than the name and bottom-aligns via the parent's flex-end.
+      gap: 4px separates the bars.
     */
     .name-stack {
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
+      gap: 4px;
+      margin-left: auto;   /* pushes stack to the right edge; fills leftover space between name and descriptors */
     }
 
     .name-stack span {
       font-family: 'Alpino', system-ui, sans-serif;
-      font-size: 2.477vw;       /* exactly 9.907vw ÷ 4 */
+      font-size: 1.35vw;
       font-weight: 400;
-      font-style: normal;
-      line-height: 0.88;
-      letter-spacing: -0.02em;
-      color: #0f0f0f;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
       white-space: nowrap;
       display: block;
     }
@@ -208,11 +239,9 @@
 
     <div class="left">
       <div class="bio">
-        <p>
-          Urban planner + researcher in NYC.<br>
-          Columbia GSAPP 2026.<br>
-          Housing, memory, coastal futures.
-        </p>
+        <p>Urban planner and researcher based in New York City.</p>
+        <p>I work at the intersection of public space, community memory, and civic engagement.</p>
+        <p>Columbia GSAPP '26.</p>
       </div>
     </div>
 
@@ -220,33 +249,33 @@
       <div class="grid-wrap">
 
         <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Ephemeral Cities Thesis">
-          <div class="card-label"><span>Ephemeral Cities — Thesis</span></div>
+          <p class="card-title">Thesis</p>
+          <p class="card-sub">Lessons from the Ephemeral Cities of the 21st Century</p>
+        </a>
+
+        <a href="https://www.roomemories.com" target="_blank" rel="noopener noreferrer" class="card card--roomemories">
+          <p class="card-title">roomemories.com</p>
+          <p class="card-sub">Interactive Bonnaroo Memory Map</p>
         </a>
 
         <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="roomemories.com">
-          <div class="card-label"><span>roomemories.com</span></div>
+          <p class="card-title">City of Ojai</p>
+          <p class="card-sub">Tiny Home Ordinance, Tent Town Supportive Housing, Permitting System</p>
         </a>
 
         <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="City of Ojai">
-          <div class="card-label"><span>City of Ojai</span></div>
+          <p class="card-title">GSAPP Studio</p>
+          <p class="card-sub">Planning for Change in Renca, Santiago, Chile</p>
         </a>
 
         <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="GSAPP Studio">
-          <div class="card-label"><span>GSAPP Studio</span></div>
+          <p class="card-title">NYC Evacuation GIS</p>
+          <p class="card-sub">Spatial analysis + mapping</p>
         </a>
 
         <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Project 5">
-          <div class="card-label"><span>Coming soon</span></div>
-        </a>
-
-        <a href="#" class="card">
-          <img src="https://placehold.co/480x340/e0e0e0/888888?text=" alt="Project 6">
-          <div class="card-label"><span>Coming soon</span></div>
+          <p class="card-title">Design Work</p>
+          <p class="card-sub">InDesign, data visualization, visual systems</p>
         </a>
 
       </div>
@@ -254,13 +283,13 @@
 
   </div>
 
-  <!-- Full-width typographic unit: name left + three descriptor lines right -->
+  <!-- Full-width typographic unit: name left + three colour bars right -->
   <div class="hero-name">
     <div class="name-main">Sarah Kameli</div>
     <div class="name-stack">
-      <span>Urbanist.</span>
-      <span>Public Space Advocate.</span>
-      <span>Lifelong Student.</span>
+      <span style="color:#E879F9;">Urbanist</span>
+      <span style="color:#A855F7;">Public Space Advocate</span>
+      <span style="color:#6366F1;">Lifelong Student</span>
     </div>
   </div>
 
