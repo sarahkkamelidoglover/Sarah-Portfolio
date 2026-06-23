@@ -158,11 +158,19 @@
 
     .grid-wrap {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: 1.5fr 0.9fr 0.9fr 0.9fr;
       gap: 0.55rem;
       width: 100%;
     }
+
+    /* ─── Mosaic placements ─── */
+    .card--thesis        { grid-area: 1 / 1 / 3 / 2; }
+    .card--roomemories   { grid-area: 1 / 2 / 2 / 4; }
+    .card--ojai          { grid-area: 2 / 2 / 4 / 3; }
+    .card--gsapp         { grid-area: 2 / 3 / 4 / 4; }
+    .card--nycevacuation { grid-area: 3 / 1 / 5 / 2; }
+    [data-project="design"] { grid-area: 4 / 2 / 5 / 4; }
 
     /* ─── Project cards ─── */
     .card {
@@ -264,7 +272,7 @@
     /* ─── City of Ojai card: image + overlay ─── */
     .card--ojai,
     .card--ojai:hover {
-      background: url('ojai.jpg') center top / cover no-repeat;
+      background: url('ojai.jpg') center bottom / cover no-repeat;
       position: relative;
     }
 
