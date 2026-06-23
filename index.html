@@ -108,6 +108,85 @@
       background-repeat: no-repeat;
     }
 
+    .detail-image.multi-img {
+      display: flex;
+      flex-direction: row;
+      gap: 0.4rem;
+      background: none;
+    }
+
+    .detail-image.multi-img img {
+      height: 100%;
+      width: auto;
+      object-fit: cover;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .detail-image.split-view {
+      display: flex;
+      flex-direction: row;
+      gap: 12px;
+      background: none;
+    }
+
+    .split-left {
+      flex-shrink: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .split-left img {
+      height: 100%;
+      width: auto;
+      display: block;
+    }
+
+    .split-right {
+      flex: 1;
+      min-width: 0;
+      height: 100%;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .split-right .slide {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: left center;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+
+    .split-right .slide.active { opacity: 1; }
+
+    .slide-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.82);
+      border: none;
+      cursor: pointer;
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      line-height: 1;
+      z-index: 2;
+      transition: background 0.18s;
+      padding: 0;
+    }
+
+    .slide-btn:hover { background: rgba(255,255,255,1); }
+    .slide-prev { left: 6px; }
+    .slide-next { right: 6px; }
+
     .detail-body {
       flex-shrink: 0;
       display: flex;
@@ -193,7 +272,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.65);
+      background: rgba(0, 0, 0, 0.6);
       transition: background 0.28s;
       pointer-events: none;
     }
@@ -320,7 +399,7 @@
       <div class="grid-wrap">
 
         <a href="#" class="card card--thesis" data-project="thesis">
-          <p class="card-title">Thesis</p>
+          <p class="card-title">Master's Thesis</p>
           <p class="card-sub">Lessons from the Ephemeral Cities of the 21st Century</p>
         </a>
 
@@ -369,9 +448,9 @@
 <script>
   const projects = {
     thesis: {
-      title: 'Ephemeral Cities',
-      desc: 'A thesis on temporary urban settlements — from refugee camps to festival cities — and what they reveal about permanence, belonging, and the future of urban form. Developed at Columbia GSAPP, 2026.',
-      image: null,
+      titleHtml: 'Lessons from the Ephemeral Cities of the 21st Century<br><span style="font-weight:400">Bonnaroo Music &amp; Arts Festival as a Case Study of David Harvey’s Dialectical Utopia</span>',
+      desc: 'An examination of Bonnaroo Music & Arts Festival as a temporary city, analyzing the spatial and social dynamics that emerge, how increasing commodification impacts them, and what this reveals about David Harvey\'s concept of Dialectical Utopia and the role of public space in cultivating collective imagination.',
+      images: ['thesis.jpg', 'thesis2.jpg'],
       link: '#',
       newTab: false
     },
@@ -385,21 +464,21 @@
     ojai: {
       title: 'City of Ojai',
       desc: 'Assistant Planner work developing a Tiny Home Ordinance and Tent Town Supportive Housing framework. Built permitting tools in GeoCivix and automated reporting workflows with Google Apps Script.',
-      image: null,
+      image: 'ojai.jpg',
       link: '#',
       newTab: false
     },
     gsapp: {
-      title: 'GSAPP Studio',
-      desc: 'A planning studio project for Renca, Santiago — examining displacement, land use change, and community resilience at the urban fringe of a rapidly growing metropolitan region.',
-      image: null,
+      title: 'GSAPP Urban Planning Studio | Spring 2025',
+      desc: 'A graduate planning studio conducted in partnership with the Municipality of Renca and students from Pontificia Universidad Católica de Chile and Universidad de Chile. As community engagement lead, I coordinated the international partnership and developed four forms of engagement: a pop-up asking residents what makes Renca special, interviews, surveys, and a formal workshop. Together we identified key issues including safety, disconnection, spatial inequality, and access to funding, and developed asset-based recommendations for a more sustainable and equitable Renca.',
+      splitView: { left: 'StudioProject.jpg', middle: 'studio1.jpg', slides: Array.from({length: 30}, (_, i) => `studio${i + 7}.jpg`) },
       link: '#',
       newTab: false
     },
     gis: {
       title: 'NYC Evacuation GIS',
       desc: 'Spatial analysis of New York City evacuation zones, mapping coverage gaps and equity disparities across borough boundaries. Developed as part of graduate coursework at Columbia GSAPP.',
-      image: null,
+      image: 'nycevacuation.jpg',
       link: '#',
       newTab: false
     },
@@ -417,11 +496,16 @@
   const descEl       = document.getElementById('detail-desc-el');
   const linkEl       = document.getElementById('detail-link');
   const imageWrapEl  = document.getElementById('detail-image');
-  let lockedCard = null;
-  let hideTimer  = null;
+  let lockedCard    = null;
+  let hideTimer     = null;
+  let slideInterval = null;
 
   function populate(data) {
-    titleEl.textContent = data.title;
+    if (data.titleHtml) {
+      titleEl.innerHTML = data.titleHtml;
+    } else {
+      titleEl.textContent = data.title;
+    }
     descEl.textContent  = data.desc;
     linkEl.href         = data.link;
     if (data.newTab) {
@@ -431,7 +515,36 @@
       linkEl.removeAttribute('target');
       linkEl.removeAttribute('rel');
     }
-    imageWrapEl.style.backgroundImage = data.image ? `url('${data.image}')` : 'none';
+    clearInterval(slideInterval);
+    slideInterval = null;
+    if (data.splitView) {
+      imageWrapEl.classList.remove('multi-img', 'slideshow');
+      imageWrapEl.classList.add('split-view');
+      imageWrapEl.style.backgroundImage = 'none';
+      let cur = 0;
+      const { left, middle, slides } = data.splitView;
+      imageWrapEl.innerHTML =
+        `<div class="split-left"><img src="${left}" alt=""></div>` +
+        (middle ? `<div class="split-left"><img src="${middle}" alt=""></div>` : '') +
+        `<div class="split-right">` +
+          slides.map((src, i) => `<img src="${src}" class="slide${i === 0 ? ' active' : ''}" alt="">`).join('') +
+        `</div>`;
+      const slideEls = imageWrapEl.querySelectorAll('.slide');
+      slideInterval = setInterval(() => {
+        slideEls[cur].classList.remove('active');
+        cur = (cur + 1) % slideEls.length;
+        slideEls[cur].classList.add('active');
+      }, 2000);
+    } else if (data.images) {
+      imageWrapEl.classList.remove('slideshow', 'split-view');
+      imageWrapEl.classList.add('multi-img');
+      imageWrapEl.style.backgroundImage = 'none';
+      imageWrapEl.innerHTML = data.images.map(src => `<img src="${src}" alt="">`).join('');
+    } else {
+      imageWrapEl.classList.remove('multi-img', 'slideshow', 'split-view');
+      imageWrapEl.innerHTML = '';
+      imageWrapEl.style.backgroundImage = data.image ? `url('${data.image}')` : 'none';
+    }
   }
 
   function showFor(card) {
