@@ -364,18 +364,10 @@
   const titleEl  = panel.querySelector('.detail-title');
   const descEl   = panel.querySelector('.detail-desc');
   const linkEl   = document.getElementById('detail-link');
-  let activeCard = null;
-  let swapTimer  = null;
+  let lockedCard = null;
+  let hideTimer  = null;
 
-  function closePanel() {
-    panel.classList.remove('is-visible');
-    if (activeCard) {
-      activeCard.classList.remove('is-active');
-      activeCard = null;
-    }
-  }
-
-  function openPanel(card, data) {
+  function populate(data) {
     titleEl.textContent = data.title;
     descEl.textContent  = data.desc;
     if (data.link) {
@@ -384,29 +376,40 @@
     } else {
       linkEl.classList.add('is-hidden');
     }
+  }
+
+  function showFor(card) {
+    clearTimeout(hideTimer);
+    populate(projects[card.dataset.project]);
     panel.classList.add('is-visible');
-    card.classList.add('is-active');
-    activeCard = card;
+  }
+
+  function scheduleHide() {
+    hideTimer = setTimeout(() => panel.classList.remove('is-visible'), 80);
   }
 
   document.querySelectorAll('.card[data-project]').forEach(card => {
+    card.addEventListener('mouseenter', () => showFor(card));
+
+    card.addEventListener('mouseleave', () => {
+      if (lockedCard) {
+        showFor(lockedCard);   // restore locked card's content when leaving any card
+      } else {
+        scheduleHide();
+      }
+    });
+
     card.addEventListener('click', e => {
       e.preventDefault();
-      clearTimeout(swapTimer);
-
-      if (activeCard === card) {
-        closePanel();
-        return;
-      }
-
-      const data = projects[card.dataset.project];
-
-      if (activeCard) {
-        activeCard.classList.remove('is-active');
-        panel.classList.remove('is-visible');
-        swapTimer = setTimeout(() => openPanel(card, data), 280);
+      if (lockedCard === card) {
+        card.classList.remove('is-active');
+        lockedCard = null;
+        scheduleHide();
       } else {
-        openPanel(card, data);
+        if (lockedCard) lockedCard.classList.remove('is-active');
+        lockedCard = card;
+        card.classList.add('is-active');
+        showFor(card);
       }
     });
   });
