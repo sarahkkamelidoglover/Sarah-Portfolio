@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Sarah Kameli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Alpino';
+      src: url('/fonts/Alpino-Variable.woff2') format('woff2'),
+           url('/fonts/Alpino-Variable.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <style>
+    :root {
+      --bg:       #f2f2f2;
+      --electric: #5a3eff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.25rem;
+      padding: 1.75rem 0;
+    }
+
+    .nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--electric); }
+    .nav a.active { color: var(--electric); }
+
+    .about-wrap {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      padding: 4.5rem 48px 2rem;
+    }
+
+    .about-inner {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 4rem;
+      width: 100%;
+    }
+
+    .about-content {
+      flex: 1;
+      max-width: 580px;
+    }
+
+    .about-heading {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #0f0f0f;
+      margin-bottom: 2rem;
+    }
+
+    .about-body {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .about-body p {
+      font-size: 0.875rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #444;
+      letter-spacing: -0.01em;
+    }
+
+    .about-photos {
+      display: flex;
+      flex-direction: row;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      margin-top: 4rem;
+    }
+
+    .about-photos img {
+      display: block;
+      flex-shrink: 0;
+      max-height: 260px;
+      width: auto;
+    }
+
+    .about-photos img:last-child {
+      max-height: 200px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html">home</a>
+    <a href="about.html" class="active">about</a>
+    <a href="contact.html">contact</a>
+    <a href="#">resume</a>
+    <a href="https://www.linkedin.com/in/sarah-kameli-496a9827/" target="_blank" rel="noopener noreferrer">linkedin</a>
+  </nav>
+
+  <div class="about-wrap">
+    <div class="about-inner">
+      <div class="about-content">
+        <h1 class="about-heading">About</h1>
+        <div class="about-body">
+          <p>I'm an urban planner and researcher based in New York City, drawn to the spaces where cities reveal something true about the people who inhabit them — festivals, public squares, informal settlements, and everything in between.</p>
+          <p>I recently completed my Master's in Urban Planning at Columbia GSAPP, where my thesis examined Bonnaroo Music &amp; Arts Festival as a temporary city and what it reveals about public space, commodification, and collective imagination. Before and during graduate school, I worked as an Assistant Planner for the City of Ojai, California, where I focused on affordable housing, ordinance development, and digital permitting.</p>
+          <p>I care deeply about community engagement, about creating processes where people feel heard and where their input actually shapes outcomes.</p>
+          <p>I'm currently looking for roles in New York City at the intersection of planning, civic engagement, and public programming.</p>
+        </div>
+      </div>
+      <div class="about-photos">
+        <img src="self.jpg" alt="Sarah Kameli">
+        <img src="self1.jpg" alt="Sarah Kameli">
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

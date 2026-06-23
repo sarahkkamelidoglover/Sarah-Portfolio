@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Sarah Kameli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Alpino';
+      src: url('/fonts/Alpino-Variable.woff2') format('woff2'),
+           url('/fonts/Alpino-Variable.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <style>
+    :root {
+      --bg:       #f2f2f2;
+      --electric: #5a3eff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.25rem;
+      padding: 1.75rem 0;
+    }
+
+    .nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--electric); }
+    .nav a.active { color: var(--electric); }
+
+    .contact-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 48px;
+    }
+
+    .contact-heading {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #0f0f0f;
+      margin-bottom: 3rem;
+    }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .contact-list a,
+    .contact-list span {
+      font-size: 1rem;
+      font-weight: 400;
+      color: #444;
+      text-decoration: none;
+      letter-spacing: -0.01em;
+      transition: color 0.2s;
+    }
+
+    .contact-list a:hover { color: var(--electric); }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html">home</a>
+    <a href="about.html">about</a>
+    <a href="contact.html" class="active">contact</a>
+    <a href="#">resume</a>
+    <a href="https://www.linkedin.com/in/sarah-kameli-496a9827/" target="_blank" rel="noopener noreferrer">linkedin</a>
+  </nav>
+
+  <div class="contact-wrap">
+    <h1 class="contact-heading">Get in touch.</h1>
+    <div class="contact-list">
+      <a href="mailto:sk5521@columbia.edu">sk5521@columbia.edu</a>
+      <a href="https://www.linkedin.com/in/sarah-kameli-496a9827/" target="_blank" rel="noopener noreferrer">linkedin.com/in/sarah-kameli-496a9827</a>
+      <span>New York City</span>
+    </div>
+  </div>
+
+</body>
+</html>
