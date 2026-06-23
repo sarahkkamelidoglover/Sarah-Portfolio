@@ -212,7 +212,7 @@
       position: relative;
     }
 
-    .card--roomemories::before {
+.card--roomemories::before {
       content: '';
       position: absolute;
       inset: 0;
@@ -228,6 +228,118 @@
     .card--roomemories .card-sub,
     .card--roomemories:hover .card-title,
     .card--roomemories:hover .card-sub {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    /* ─── Thesis card: image + overlay ─── */
+    .card--thesis,
+    .card--thesis:hover {
+      background: url('thesis.jpg') center center / cover no-repeat;
+      position: relative;
+    }
+
+    .card--thesis::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      transition: background 0.28s;
+    }
+
+    .card--thesis:hover::before {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .card--thesis .card-title,
+    .card--thesis .card-sub,
+    .card--thesis:hover .card-title,
+    .card--thesis:hover .card-sub {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    /* ─── City of Ojai card: image + overlay ─── */
+    .card--ojai,
+    .card--ojai:hover {
+      background: url('ojai.jpg') center top / cover no-repeat;
+      position: relative;
+    }
+
+    .card--ojai::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      transition: background 0.28s;
+    }
+
+    .card--ojai:hover::before {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .card--ojai .card-title,
+    .card--ojai .card-sub,
+    .card--ojai:hover .card-title,
+    .card--ojai:hover .card-sub {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    /* ─── GSAPP Studio card: image + overlay ─── */
+    .card--gsapp,
+    .card--gsapp:hover {
+      background: url('StudioProject.jpg') center / cover no-repeat;
+      position: relative;
+    }
+
+    .card--gsapp::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      transition: background 0.28s;
+    }
+
+    .card--gsapp:hover::before {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .card--gsapp .card-title,
+    .card--gsapp .card-sub,
+    .card--gsapp:hover .card-title,
+    .card--gsapp:hover .card-sub {
+      position: relative;
+      z-index: 1;
+      color: #ffffff;
+    }
+
+    /* ─── NYC Evacuation card: image + overlay ─── */
+    .card--nycevacuation,
+    .card--nycevacuation:hover {
+      background: url('nycevacuation.jpg') right center / contain no-repeat;
+      position: relative;
+    }
+
+    .card--nycevacuation::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.45);
+      transition: background 0.28s;
+    }
+
+    .card--nycevacuation:hover::before {
+      background: rgba(0, 0, 0, 0.62);
+    }
+
+    .card--nycevacuation .card-title,
+    .card--nycevacuation .card-sub,
+    .card--nycevacuation:hover .card-title,
+    .card--nycevacuation:hover .card-sub {
       position: relative;
       z-index: 1;
       color: #ffffff;
@@ -300,7 +412,7 @@
     <div class="right">
       <div class="grid-wrap">
 
-        <a href="#" class="card" data-project="thesis">
+        <a href="#" class="card card--thesis" data-project="thesis">
           <p class="card-title">Thesis</p>
           <p class="card-sub">Lessons from the Ephemeral Cities of the 21st Century</p>
         </a>
@@ -310,19 +422,19 @@
           <p class="card-sub">Interactive Bonnaroo Memory Map</p>
         </a>
 
-        <a href="#" class="card" data-project="ojai">
+        <a href="#" class="card card--ojai" data-project="ojai">
           <p class="card-title">City of Ojai</p>
           <p class="card-sub">Tiny Home Ordinance, Tent Town Supportive Housing, Permitting System</p>
         </a>
 
-        <a href="#" class="card" data-project="gsapp">
-          <p class="card-title">GSAPP Studio</p>
-          <p class="card-sub">Planning for Change in Renca, Santiago, Chile</p>
+        <a href="#" class="card card--gsapp" data-project="gsapp">
+          <p class="card-title">Urban Planning Studio</p>
+          <p class="card-sub">Visions of Renca | Santiago, Chile</p>
         </a>
 
-        <a href="#" class="card" data-project="gis">
-          <p class="card-title">NYC Evacuation GIS</p>
-          <p class="card-sub">Spatial analysis + mapping</p>
+        <a href="#" class="card card--nycevacuation" data-project="gis">
+          <p class="card-title">Evacuation</p>
+          <p class="card-sub">Mapping Disparities in Hurricane Evacuation Ability in NYC</p>
         </a>
 
         <a href="#" class="card" data-project="design">
