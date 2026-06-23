@@ -246,10 +246,10 @@
     /* ─── Mosaic placements ─── */
     .card--thesis        { grid-area: 1 / 1 / 3 / 2; }
     .card--roomemories   { grid-area: 1 / 2 / 2 / 4; }
-    .card--ojai          { grid-area: 2 / 2 / 4 / 3; }
+    .card--ojai          { grid-area: 2 / 3 / 4 / 4; }
     .card--gsapp         { grid-area: 3 / 1 / 5 / 2; }
-    .card--nycevacuation { grid-area: 2 / 3 / 5 / 4; }
-    [data-project="design"] { grid-area: 4 / 2 / 5 / 3; }
+    .card--nycevacuation { grid-area: 2 / 2 / 5 / 3; }
+    [data-project="design"] { grid-area: 4 / 3 / 5 / 4; }
 
     /* ─── Project cards ─── */
     .card {
@@ -272,14 +272,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.5);
       transition: background 0.28s;
       pointer-events: none;
     }
 
     .card:hover::before,
     .card.is-active::before {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.15);
     }
 
     .card.is-active { outline-color: var(--electric); }
@@ -410,7 +410,7 @@
 
         <a href="#" class="card card--ojai" data-project="ojai">
           <p class="card-title">City of Ojai</p>
-          <p class="card-sub">Tiny Home Ordinance, Tent Town Supportive Housing, Permitting System</p>
+          <p class="card-sub">Assistant Planner | Housing, Policy, Permitting & Community Engagement</p>
         </a>
 
         <a href="#" class="card card--gsapp" data-project="gsapp">
@@ -419,7 +419,7 @@
         </a>
 
         <a href="#" class="card card--nycevacuation" data-project="gis">
-          <p class="card-title">Evacuation</p>
+          <p class="card-title">Spatial Analysis</p>
           <p class="card-sub">Mapping Disparities in Hurricane Evacuation Ability in NYC</p>
         </a>
 
@@ -439,7 +439,7 @@
     <div class="name-stack">
       <span style="color:#E879F9;">Urbanist</span>
       <span style="color:#A855F7;">Public Space Advocate</span>
-      <span style="color:#6366F1;">Lifelong Student</span>
+      <span style="color:#6366F1;">Lifelong Learner</span>
     </div>
   </div>
 
@@ -448,7 +448,7 @@
 <script>
   const projects = {
     thesis: {
-      titleHtml: 'Lessons from the Ephemeral Cities of the 21st Century<br><span style="font-weight:400">Bonnaroo Music &amp; Arts Festival as a Case Study of David Harvey’s Dialectical Utopia</span>',
+      titleHtml: 'Lessons from the Ephemeral Cities of the 21st Century<br><span style="font-weight:300;font-size:0.75rem">Bonnaroo Music &amp; Arts Festival as a Case Study of David Harvey’s Dialectical Utopia</span>',
       desc: 'An examination of Bonnaroo Music & Arts Festival as a temporary city, analyzing the spatial and social dynamics that emerge, how increasing commodification impacts them, and what this reveals about David Harvey\'s concept of Dialectical Utopia and the role of public space in cultivating collective imagination.',
       images: ['thesis.jpg', 'thesis2.jpg'],
       link: '#',
@@ -463,13 +463,14 @@
     },
     ojai: {
       title: 'City of Ojai',
-      desc: 'Assistant Planner work developing a Tiny Home Ordinance and Tent Town Supportive Housing framework. Built permitting tools in GeoCivix and automated reporting workflows with Google Apps Script.',
-      image: 'ojai.jpg',
+      desc: 'As an Assistant Planner for the City of Ojai, I worked across affordable housing, policy, and permitting. In my first year, I helped champion four affordable housing projects through the public hearing process, supporting the city in meeting its Regional Housing Needs Allocation. I drafted staff reports and ordinances including the city\'s Moveable Tiny Homes Ordinance, through which I proposed the allowance of composting toilets to reduce cost burden and environmental impact. While attending graduate school part-time, I led the city\'s transition from paper to digital permitting, building out our online interface through GeoCivix, including 45+ online applications, to streamline the process for planning staff and residents alike.',
+      images: ['ojai.jpg', 'pc3.jpg'],
       link: '#',
+      linkText: 'View work →',
       newTab: false
     },
     gsapp: {
-      title: 'GSAPP Urban Planning Studio | Spring 2025',
+      title: 'Columbia GSAPP Urban Planning Studio | Spring 2025',
       desc: 'A graduate planning studio conducted in partnership with the Municipality of Renca and students from Pontificia Universidad Católica de Chile and Universidad de Chile. As community engagement lead, I coordinated the international partnership and developed four forms of engagement: a pop-up asking residents what makes Renca special, interviews, surveys, and a formal workshop. Together we identified key issues including safety, disconnection, spatial inequality, and access to funding, and developed asset-based recommendations for a more sustainable and equitable Renca.',
       splitView: { left: 'StudioProject.jpg', middle: 'studio1.jpg', slides: Array.from({length: 30}, (_, i) => `studio${i + 7}.jpg`) },
       link: '#',
@@ -477,8 +478,8 @@
     },
     gis: {
       title: 'NYC Evacuation GIS',
-      desc: 'Spatial analysis of New York City evacuation zones, mapping coverage gaps and equity disparities across borough boundaries. Developed as part of graduate coursework at Columbia GSAPP.',
-      image: 'nycevacuation.jpg',
+      desc: 'A multi-criteria decision analysis mapping disparities in hurricane evacuation ability across New York City. Using factors including 100 and 500-year floodplain, subway access, vehicle ownership, cellular access, and population density, the analysis reveals that communities already at highest risk face compounding disadvantages as systems shut down. Findings highlight the critical role of timely, accessible information and the barriers of technology, language, culture, and institutional trust that leave some populations behind.',
+      images: ['nycevacuation.jpg', 'evacuation1.jpg'],
       link: '#',
       newTab: false
     },
@@ -508,6 +509,7 @@
     }
     descEl.textContent  = data.desc;
     linkEl.href         = data.link;
+    linkEl.textContent  = data.linkText || 'View project →';
     if (data.newTab) {
       linkEl.target = '_blank';
       linkEl.rel    = 'noopener noreferrer';
