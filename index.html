@@ -158,8 +158,8 @@
 
     .grid-wrap {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: 1.5fr 0.9fr 0.9fr 0.9fr;
+      grid-template-columns: 0.97fr 1fr 1fr;
+      grid-template-rows: 1.5fr 0.75fr 0.75fr 0.9fr;
       gap: 0.55rem;
       width: 100%;
     }
@@ -168,9 +168,9 @@
     .card--thesis        { grid-area: 1 / 1 / 3 / 2; }
     .card--roomemories   { grid-area: 1 / 2 / 2 / 4; }
     .card--ojai          { grid-area: 2 / 2 / 4 / 3; }
-    .card--gsapp         { grid-area: 2 / 3 / 4 / 4; }
-    .card--nycevacuation { grid-area: 3 / 1 / 5 / 2; }
-    [data-project="design"] { grid-area: 4 / 2 / 5 / 4; }
+    .card--gsapp         { grid-area: 3 / 1 / 5 / 2; }
+    .card--nycevacuation { grid-area: 2 / 3 / 5 / 4; }
+    [data-project="design"] { grid-area: 4 / 2 / 5 / 3; }
 
     /* ─── Project cards ─── */
     .card {
@@ -183,174 +183,73 @@
       background: #e0e0e0;
       text-decoration: none;
       cursor: pointer;
-      transition: background 0.28s, outline-color 0.28s;
+      position: relative;
+      transition: outline-color 0.28s;
       outline: 2px solid transparent;
       outline-offset: -2px;
     }
 
-    .card:hover { background: #1a1916; }
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      transition: background 0.28s;
+      pointer-events: none;
+    }
+
+    .card:hover::before,
+    .card.is-active::before {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
     .card.is-active { outline-color: var(--electric); }
 
     .card-title {
       font-family: 'Alpino', system-ui, sans-serif;
       font-size: 0.82rem;
       font-weight: 700;
-      color: #1a1916;
+      color: #ffffff;
       line-height: 1.2;
       margin-bottom: 0.3rem;
-      transition: color 0.28s;
+      position: relative;
+      z-index: 1;
     }
 
     .card-sub {
       font-family: 'Alpino', system-ui, sans-serif;
       font-size: 0.7rem;
       font-weight: 400;
-      color: #5a5a5a;
+      color: #ffffff;
       line-height: 1.4;
-      transition: color 0.28s;
-    }
-
-    .card:hover .card-title,
-    .card:hover .card-sub { color: #f2f2f2; }
-
-    /* ─── roomemories card: image + overlay ─── */
-    .card--roomemories,
-    .card--roomemories:hover {
-      background: url('roomemories.jpg') center / cover no-repeat;
-      position: relative;
-    }
-
-.card--roomemories::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.25);
-      transition: background 0.28s;
-    }
-
-    .card--roomemories:hover::before {
-      background: rgba(0, 0, 0, 0.62);
-    }
-
-    .card--roomemories .card-title,
-    .card--roomemories .card-sub,
-    .card--roomemories:hover .card-title,
-    .card--roomemories:hover .card-sub {
       position: relative;
       z-index: 1;
-      color: #ffffff;
     }
 
-    /* ─── Thesis card: image + overlay ─── */
+    /* ─── Per-card background images ─── */
+    .card--roomemories,
+    .card--roomemories:hover {
+      background: url('roomemories.jpg') center 30% / cover no-repeat;
+    }
+
     .card--thesis,
     .card--thesis:hover {
       background: url('thesis.jpg') center center / cover no-repeat;
-      position: relative;
     }
 
-    .card--thesis::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.25);
-      transition: background 0.28s;
-    }
-
-    .card--thesis:hover::before {
-      background: rgba(0, 0, 0, 0.62);
-    }
-
-    .card--thesis .card-title,
-    .card--thesis .card-sub,
-    .card--thesis:hover .card-title,
-    .card--thesis:hover .card-sub {
-      position: relative;
-      z-index: 1;
-      color: #ffffff;
-    }
-
-    /* ─── City of Ojai card: image + overlay ─── */
     .card--ojai,
     .card--ojai:hover {
-      background: url('ojai.jpg') center bottom / cover no-repeat;
-      position: relative;
+      background: url('ojai.jpg') center 45% / cover no-repeat;
     }
 
-    .card--ojai::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.25);
-      transition: background 0.28s;
-    }
-
-    .card--ojai:hover::before {
-      background: rgba(0, 0, 0, 0.62);
-    }
-
-    .card--ojai .card-title,
-    .card--ojai .card-sub,
-    .card--ojai:hover .card-title,
-    .card--ojai:hover .card-sub {
-      position: relative;
-      z-index: 1;
-      color: #ffffff;
-    }
-
-    /* ─── GSAPP Studio card: image + overlay ─── */
     .card--gsapp,
     .card--gsapp:hover {
-      background: url('StudioProject.jpg') center / cover no-repeat;
-      position: relative;
+      background: url('StudioProject.jpg') center 19% / cover no-repeat;
     }
 
-    .card--gsapp::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.25);
-      transition: background 0.28s;
-    }
-
-    .card--gsapp:hover::before {
-      background: rgba(0, 0, 0, 0.62);
-    }
-
-    .card--gsapp .card-title,
-    .card--gsapp .card-sub,
-    .card--gsapp:hover .card-title,
-    .card--gsapp:hover .card-sub {
-      position: relative;
-      z-index: 1;
-      color: #ffffff;
-    }
-
-    /* ─── NYC Evacuation card: image + overlay ─── */
     .card--nycevacuation,
     .card--nycevacuation:hover {
-      background: url('nycevacuation.jpg') right center / contain no-repeat;
-      position: relative;
-    }
-
-    .card--nycevacuation::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.45);
-      transition: background 0.28s;
-    }
-
-    .card--nycevacuation:hover::before {
-      background: rgba(0, 0, 0, 0.62);
-    }
-
-    .card--nycevacuation .card-title,
-    .card--nycevacuation .card-sub,
-    .card--nycevacuation:hover .card-title,
-    .card--nycevacuation:hover .card-sub {
-      position: relative;
-      z-index: 1;
-      color: #ffffff;
+      background: url('nycevacuation.jpg') right 40% / contain no-repeat;
     }
 
     /* ─── Full-width name row at bottom ─── */
