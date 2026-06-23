@@ -73,16 +73,19 @@
       min-height: 0;
     }
 
-    /* ─── Left column: detail panel area ─── */
+    /* ─── Left column ─── */
     .left {
       flex: 1;
       display: flex;
-      align-items: center;
-      padding: 0 2rem 0 48px;
+      align-items: stretch;
+      padding: 0.75rem 1.5rem 1rem 48px;
     }
 
     /* ─── Detail panel ─── */
     .detail-panel {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
       opacity: 0;
       transform: translateY(14px);
       transition: opacity 0.32s ease, transform 0.32s ease;
@@ -95,39 +98,62 @@
       pointer-events: auto;
     }
 
-    .detail-title {
-      font-family: 'Alpino', system-ui, sans-serif;
-      font-size: 1.75rem;
-      font-weight: 700;
-      color: #0f0f0f;
-      line-height: 1.1;
-      letter-spacing: -0.02em;
+    .detail-image {
+      flex: 1;
+      min-height: 0;
+      border-radius: 6px;
+      background: #d8d8d8;
+      overflow: hidden;
       margin-bottom: 0.85rem;
     }
 
-    .detail-desc {
-      font-size: 0.78rem;
-      line-height: 1.8;
-      color: #555;
-      font-weight: 300;
-      max-width: 300px;
-      margin-bottom: 1.25rem;
+    .detail-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
-    .detail-link {
+    .detail-body {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .detail-title {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #0f0f0f;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.4rem;
+    }
+
+    .detail-desc {
       font-size: 0.72rem;
+      line-height: 1.75;
+      color: #666;
+      font-weight: 300;
+      margin-bottom: 0.75rem;
+    }
+
+    .detail-btn {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-size: 0.7rem;
       font-weight: 500;
-      letter-spacing: 0.06em;
-      color: var(--electric);
+      letter-spacing: 0.05em;
+      color: #fff;
+      background: #0f0f0f;
       text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3em;
+      display: inline-block;
+      align-self: flex-start;
+      padding: 0.45rem 0.85rem;
+      border-radius: 4px;
       transition: opacity 0.2s;
     }
 
-    .detail-link:hover { opacity: 0.7; }
-    .detail-link.is-hidden { display: none; }
+    .detail-btn:hover { opacity: 0.72; }
 
     /* ─── Right column: 2×3 grid ─── */
     .right {
@@ -266,12 +292,17 @@
 
   <div class="upper">
 
-    <!-- Left: detail panel (empty until a card is clicked) -->
+    <!-- Left: detail panel -->
     <div class="left">
       <div class="detail-panel" id="detail-panel">
-        <h2 class="detail-title"></h2>
-        <p class="detail-desc"></p>
-        <a href="#" class="detail-link is-hidden" id="detail-link" target="_blank" rel="noopener noreferrer">view project →</a>
+        <div class="detail-image">
+          <img src="" alt="" class="detail-img" id="detail-img">
+        </div>
+        <div class="detail-body">
+          <h2 class="detail-title" id="detail-title-el"></h2>
+          <p class="detail-desc" id="detail-desc-el"></p>
+          <a href="#" class="detail-btn" id="detail-link">View project →</a>
+        </div>
       </div>
     </div>
 
@@ -331,50 +362,72 @@
     thesis: {
       title: 'Ephemeral Cities',
       desc: 'A thesis on temporary urban settlements — from refugee camps to festival cities — and what they reveal about permanence, belonging, and the future of urban form. Developed at Columbia GSAPP, 2026.',
-      link: null
+      image: null,
+      link: '#',
+      newTab: false
     },
     roomemories: {
       title: 'roomemories.com',
       desc: 'An interactive memory map of Bonnaroo built with Mapbox GL JS and Supabase. Visitors pin and share location-based memories across the festival grounds, building a collective archive of place.',
-      link: 'https://www.roomemories.com'
+      image: 'roomemories.jpg',
+      link: 'https://www.roomemories.com',
+      newTab: true
     },
     ojai: {
       title: 'City of Ojai',
       desc: 'Assistant Planner work developing a Tiny Home Ordinance and Tent Town Supportive Housing framework. Built permitting tools in GeoCivix and automated reporting workflows with Google Apps Script.',
-      link: null
+      image: null,
+      link: '#',
+      newTab: false
     },
     gsapp: {
       title: 'GSAPP Studio',
       desc: 'A planning studio project for Renca, Santiago — examining displacement, land use change, and community resilience at the urban fringe of a rapidly growing metropolitan region.',
-      link: null
+      image: null,
+      link: '#',
+      newTab: false
     },
     gis: {
       title: 'NYC Evacuation GIS',
       desc: 'Spatial analysis of New York City evacuation zones, mapping coverage gaps and equity disparities across borough boundaries. Developed as part of graduate coursework at Columbia GSAPP.',
-      link: null
+      image: null,
+      link: '#',
+      newTab: false
     },
     design: {
       title: 'Design Work',
       desc: 'Visual communication across studio, research, and professional contexts — InDesign layouts, data visualization, spatial diagrams, and graphic identity systems.',
-      link: null
+      image: null,
+      link: '#',
+      newTab: false
     }
   };
 
   const panel    = document.getElementById('detail-panel');
-  const titleEl  = panel.querySelector('.detail-title');
-  const descEl   = panel.querySelector('.detail-desc');
+  const titleEl  = document.getElementById('detail-title-el');
+  const descEl   = document.getElementById('detail-desc-el');
   const linkEl   = document.getElementById('detail-link');
+  const imgEl    = document.getElementById('detail-img');
   let lockedCard = null;
   let hideTimer  = null;
 
   function populate(data) {
     titleEl.textContent = data.title;
     descEl.textContent  = data.desc;
-    if (data.link) {
-      linkEl.href = data.link;
-      linkEl.classList.remove('is-hidden');
+    linkEl.href         = data.link;
+    if (data.newTab) {
+      linkEl.target = '_blank';
+      linkEl.rel    = 'noopener noreferrer';
     } else {
-      linkEl.classList.add('is-hidden');
+      linkEl.removeAttribute('target');
+      linkEl.removeAttribute('rel');
+    }
+    if (data.image) {
+      imgEl.src   = data.image;
+      imgEl.style.opacity = '1';
+    } else {
+      imgEl.src   = '';
+      imgEl.style.opacity = '0';
     }
   }
 
@@ -393,7 +446,7 @@
 
     card.addEventListener('mouseleave', () => {
       if (lockedCard) {
-        showFor(lockedCard);   // restore locked card's content when leaving any card
+        showFor(lockedCard);
       } else {
         scheduleHide();
       }
