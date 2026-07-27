@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Work — Sarah Kameli</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @font-face {
+      font-family: 'Alpino';
+      src: url('/fonts/Alpino-Variable.woff2') format('woff2'),
+           url('/fonts/Alpino-Variable.woff') format('woff');
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+  </style>
+  <style>
+    :root {
+      --bg:       #f2f2f2;
+      --electric: #5a3eff;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Alpino', system-ui, sans-serif;
+      font-weight: 400;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 30;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2.25rem;
+      padding: 1.75rem 0;
+      background: var(--bg);
+    }
+
+    .nav a {
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      color: #444;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav a:hover { color: var(--electric); }
+
+    .design-wrap {
+      flex: 1;
+      padding: 6rem 48px 3rem;
+    }
+
+    .design-heading {
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      color: #0f0f0f;
+      margin-bottom: 2rem;
+    }
+
+    .design-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .design-grid img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <a href="index.html">home</a>
+    <a href="about.html">about</a>
+    <a href="contact.html">contact</a>
+    <a href="Sarah_Kameli_Resume.pdf" target="_blank" rel="noopener noreferrer">resume</a>
+    <a href="https://www.linkedin.com/in/sarah-kameli-496a9827/" target="_blank" rel="noopener noreferrer">linkedin</a>
+  </nav>
+
+  <div class="design-wrap">
+    <h1 class="design-heading">Design Work</h1>
+    <div class="design-grid">
+      <img src="OjaiCollage.jpg" alt="Design Work">
+      <video src="OjaiVideo.mp4" controls width="100%" style="display:block;"></video>
+      <iframe src="ReportLayout.pdf" width="100%" height="800px" style="display:block; border:none;"></iframe>
+      <img src="OjaiAerial.png" alt="Ojai Aerial" style="display:block; height:auto;">
+      <img src="ojai.jpg" alt="Ojai" style="display:block; max-width:100%; height:auto;">
+    </div>
+  </div>
+
+</body>
+</html>
