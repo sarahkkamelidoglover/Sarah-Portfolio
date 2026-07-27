@@ -339,6 +339,7 @@
       align-items: flex-end;
       padding: 0 48px 16px;
       user-select: none;
+      position: relative;
     }
 
     .name-main {
@@ -353,15 +354,14 @@
     }
 
     .name-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-left: auto;
+      position: absolute;
+      right: 48px;
+      bottom: 16px;
     }
 
     .name-stack span {
       font-family: 'Alpino', system-ui, sans-serif;
-      font-size: 1.35vw;
+      font-size: 1.9vw;
       font-weight: 400;
       line-height: 1.15;
       letter-spacing: -0.01em;
@@ -440,8 +440,7 @@
     <div class="name-main">Sarah Kameli</div>
     <div class="name-stack">
       <span style="color:#E879F9;">Urbanist</span>
-      <span style="color:#A855F7;">Public Space Advocate</span>
-      <span style="color:#6366F1;">Lifelong Learner</span>
+      <span style="color:#A855F7;">Brooklyn, NY</span>
     </div>
   </div>
 
